@@ -1,5 +1,3 @@
-let str = 'hi im a happy boy'
-
 let a = 'hi im Harry'
 a.length 會回傳 11 ，空白部分也會被計算
 
