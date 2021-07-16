@@ -28,14 +28,3 @@ console.log(list)
 
 
 
-
-// function squaresum(numbers){
-// 	let sum = 0
-//   for (let i = 0; i < numbers.length; i++) {
-//     sum += numbers[i] ** 2
-//   }
-// 	console.log(sum)
-// }
-
-// squaresum([1,2])
-// squaresum([0,3,4,5])
