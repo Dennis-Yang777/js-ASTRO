@@ -1,9 +1,3 @@
-// document.addEventListener('DOMContentLoaded', () => {
-// 	const a = document.querySelector('#bg')
-// 	setTimeout(() => {
-// 		a.innerHTML = '7414'
-// 	}, 3000)
-// })
 
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -15,7 +9,6 @@ document.addEventListener('DOMContentLoaded', () => {
 		}, 3000)
 	})
 })
-
 
 
 
