@@ -24,7 +24,7 @@ console.log(typeof sayHi());  // 會印出什麼？為什麼？
 // Q3
 // -------------------
 // var y = 10
-
+//window.y = 10
 (() => {
 	let x = (y = 10);
 
