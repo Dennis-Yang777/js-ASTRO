@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<script src="/0729/my.js"></script>
+	<style>
+		.box{
+			width: 300px;
+			border: solid;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+		}
+		#product{
+			background-color: #ccc;
+			font-size: 20px;
+		}
+		#product a{
+			text-decoration: none;
+			color: blue;
+		}
+		#cart .cartlist{
+			padding: 0;
+			display: flex;
+			flex-direction: column;
+		}
+		#cart .cartlist li{
+			display: flex;
+			justify-content: space-between;
+		}
+
+
+	</style>
+</head>
+<body>
+	<div class="box">
+		<div id="status">
+			<p>目前購物車內有<span id="count-state">0</span>個商品</p>
+		</div>
+		<div id="product">
+			<a href="#" data-product-id = 'U-555'>555</a>
+			<a href="#" data-product-id = 'U-666'>666</a>
+			<a href="#" data-product-id = 'U-777'>777</a>
+			<a href="#" data-product-id = 'U-888'>888</a>
+			<a href="#" data-product-id = 'U-999'>999</a>
+		</div>
+		<div id="cart">
+			<ul class="cartlist">
+				<span>目前沒有商品</span>
+			</ul>
+		</div>
+		<button id="clearcart">清空購物車</button>
+	</div>
+</body>
+</html>
