@@ -8,12 +8,12 @@ document.addEventListener('DOMContentLoaded', () => {
 	//  shoplist
 	function shoplist() {
 		return document.querySelectorAll('.cartlist li')
-	}
+	} // 取得目前所有li元素
 
 	//  how many porduct
 	function state() {
 		return document.querySelectorAll('.cartlist li').length
-	}
+	} // 取得目前所有li數量 
 
 	//  change
 	function change() {
