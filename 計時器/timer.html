@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang='en'>
+	<head>
+		<meta charset='utf-8'>
+		<meta name='viewport' content='width=device-width, initial-scale=1'>
+		<link href='https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css' rel='stylesheet' integrity='sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0' crossorigin='anonymous'>
+		<title>Timer</title>
+		<style>
+			.row{
+				width: 100%;
+				height: 100vh;
+				flex-direction: column;
+				justify-content: center;
+			}
+			.transform {
+				position: absolute;
+				width: 100%;
+				height: 100vh;
+				background-color: paleturquoise;
+				z-index: -1;
+			}
+			.none{
+				visibility: hidden;
+			}
+			.display{
+				font-size: 100px;
+				text-align: center;
+				transition: 50s;
+			}
+			
+		</style>
+	</head>
+	<body>
+		
+
+
+		<div class="row">
+			<div class="display">02:00</div>
+			<div class="transform none"></div>
+		</div>
+		<audio class="bell" src="/計時器/下課鈴.wav"></audio>
+
+		
+
+
+
+
+
+		<script src="/計時器/timer.js"></script>
+	</body>
+</html>

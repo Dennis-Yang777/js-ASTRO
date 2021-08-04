@@ -20,6 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
 			this.savedNumber = this.savedNumber.toString()
 		}
 	}
+	// 變換數字的物件
 	
 
 	function reset() {
@@ -28,6 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		result.savedNumber = ''
 		result.operator = ''
 	}
+	// 重置功能
 
 	function pack () {
 		result.savedNumber = total
@@ -35,41 +37,43 @@ document.addEventListener('DOMContentLoaded', () => {
 		result.displayNumber = ''
 		result.toString()
 	}
+	// 運算打包
 
 	function operation () {
 		switch (result.operator) {
 			case '+':
-				total = result.savedNumber + result.displayNumber
+				total = ((result.savedNumber * 10000) + (result.displayNumber * 10000)) / 10000
 				pack()
 				break
 			case '-':
-				total = result.savedNumber - result.displayNumber
+				total = ((result.savedNumber * 10000) - (result.displayNumber * 10000)) / 10000
 				pack()
 				break
 			case '*':
-				total = result.savedNumber * result.displayNumber
+				total = ((result.savedNumber * 10000) * (result.displayNumber * 10000)) / 100000000
 				pack()
 				break
 			case '/':
-				total = result.savedNumber / result.displayNumber
+				total = ((result.savedNumber * 10000) / (result.displayNumber * 10000))
 				pack()
 				break
 			default :
 				return
 		} 
 	}
+	// 	遇到各種運算子的動作
 
 	numberGroup.forEach((ele, index) => {
-		numberGroup[index].addEventListener('click', () => {
-			let whichNumber = numberGroup[index].innerText
-			let change = result.displayNumber.concat(whichNumber)
+		numberGroup[index].addEventListener('click', (e) => {
+			let clickNumber = e.target.innerText
+			let change = result.displayNumber.concat(clickNumber)
 			
-			if (result.displayNumber === '0' && whichNumber === '0') {
+			if (result.displayNumber === '0' && clickNumber === '0') {
 				result.displayNumber = '0'
-			} else if(change.length === 2 && whichNumber !== '0' && change.indexOf(0) === 0) {
-				result.displayNumber = whichNumber
+			} else if(change.length === 2 && clickNumber !== '0' && change.indexOf(0) === 0) {
+				result.displayNumber = clickNumber
 				display.innerText = result.displayNumber
-			} else if (whichNumber === '.' && /[.]+/.test(result.displayNumber)) {
+			} else if (clickNumber === '.' && /[.]+/.test(result.displayNumber)) {
 				return
 			} else {
 				result.displayNumber = change
@@ -78,9 +82,11 @@ document.addEventListener('DOMContentLoaded', () => {
 		})
 	})
 
+
+
 	operator.forEach((ele, index) => {
-		operator[index].addEventListener('click', () => {
-			let whichOperator = operator[index].id
+		operator[index].addEventListener('click', (e) => {
+			let whichOperator = e.target.id
 			if (operator[index].innerText === '=') {
 				if (result.displayNumber && result.savedNumber) {
 					result.toInt()
@@ -101,10 +107,15 @@ document.addEventListener('DOMContentLoaded', () => {
 						result.toInt()
 						operation()
 						result.operator = whichOperator
-					} else{
+					} else if (result.operator) {
+						result.operator = whichOperator
+						result.savedNumber = result.displayNumber
+						result.displayNumber = ''
+					} else {
 						return
 					}
 				}
+				console.log(result)
 			}
 		})
 	})
