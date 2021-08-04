@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	var bell = document.querySelector('.bell')
 	var transform = document.querySelector('.transform')
 	var time = {
-		minute : 120,
+		displayMinute : 120,
 		running : false,
 		intervalId : "",
 		setMinute: "",
@@ -13,14 +13,15 @@ document.addEventListener('DOMContentLoaded', () => {
 	var directKeyCode = [37, 38, 39]
 
 	document.addEventListener('keydown', (e) => {
+		console.log(e.key);
 		function calTime() {
-			if (time.minute <= 0) {
+			if (time.displayMinute <= 0) {
 				timeStop()
 				bell.play()
 			} else {
-				time.minute -= 1
-				var calMinute = Math.floor(Math.floor(time.minute % 3600) / 60)
-				var calSecond = time.minute % 60
+				time.displayMinute -= 1
+				var calMinute = Math.floor(Math.floor(time.displayMinute % 3600) / 60)
+				var calSecond = time.displayMinute % 60
 				display.innerText = `${calMinute}:${calSecond}`
 				bgTransform()
 			}
@@ -35,56 +36,58 @@ document.addEventListener('DOMContentLoaded', () => {
 			clearInterval(time.intervalId)
 			time.running = false
 		}
-		function bgTransform(x = 1) {
-			time.range += parseFloat(x / (time.setMinute * 60) * 100)
+		function bgTransform(sec = 1) {
+			time.range += parseFloat(sec / (time.setMinute * 60) * 100)
 			transform.style.width = `${time.range}%`
-			transform.classList.remove("none")
+			transform.classList.remove("hide")
 		}
 
 		// 輸入時間
 		if (numberKeyCode.includes(e.keyCode)) {
-			if (e.keyCode === 190) {
-				time.setMinute = time.setMinute.concat('.')
+			if (e.key === "." && !time.setMinute.includes(".")) {
+				time.setMinute = time.setMinute.concat(e.key)
 				parseFloat(time.setMinute)
-			} else {
-				time.setMinute = time.setMinute.concat(numberKeyCode.indexOf(e.keyCode))
+			} else if (e.key === "." && time.setMinute.includes(".")) {
+				return
+			} else if (e.key !== ".") {
+				time.setMinute = time.setMinute.concat(e.key)
 			}
 		}
 
 		// 時間控制或重置
 		if (directKeyCode.includes(e.keyCode)) {
-			switch (e.keyCode) {
-				case 37 :
-					time.minute += 5
-					bgTransform(-5)
+			switch (e.key) {
+				case 'ArrowLeft' :
+					if ((time.setMinute * 60 - time.displayMinute) > 5) {
+						time.displayMinute += 5
+						bgTransform(-5)
+					}
 					break
-				case 38 :
-					time.minute = time.setMinute * 60
+				case 'ArrowUp' :
+					time.displayMinute = time.setMinute * 60
 					time.range = 0
 					break
-				case 39 :
-					time.minute -= 5
+				case 'ArrowRight' :
+					time.displayMinute -= 5
 					bgTransform(5)
 					break
 			}
 		}
  
 		// 時間開關
-		if (e.keyCode === 13 && !time.running && !time.setMinute) {
-			time.setMinute = time.minute / 60
+		if (e.key === "Enter" && !time.running && !time.setMinute) {
+			time.setMinute = time.displayMinute / 60
 			timeGo()
-		} else if (e.keyCode === 13 && !time.running && time.setMinute <= 60) {
-			time.minute = time.setMinute * 60
+		} else if (e.key === "Enter" && !time.running && time.setMinute <= 60) {
+			time.displayMinute = time.setMinute * 60
 			timeGo()
-		} else if (e.keyCode === 32 && time.running){
+		} else if (e.key === " " && time.running){
 			timeStop()
-		} else if (e.keyCode === 32 && !time.running) {
+		} else if (e.key === " " && !time.running) {
 			timeGo()
 		} else {
 			return
 		}
 	}) 
-
-
 })
 
