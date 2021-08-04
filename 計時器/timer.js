@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	var bell = document.querySelector('.bell')
 	var transform = document.querySelector('.transform')
 	var time = {
-		displayMinute : 120,
+		displayMinute : 121,
 		running : false,
 		intervalId : "",
 		setMinute: "",
@@ -22,8 +22,20 @@ document.addEventListener('DOMContentLoaded', () => {
 				time.displayMinute -= 1
 				var calMinute = Math.floor(Math.floor(time.displayMinute % 3600) / 60)
 				var calSecond = time.displayMinute % 60
-				display.innerText = `${calMinute}:${calSecond}`
-				bgTransform()
+				if (calMinute < 10 && calSecond < 10) {
+					display.innerText = `0${calMinute}:0${calSecond}`
+					bgTransform()
+				} else if (calSecond < 10) {
+					display.innerText = `${calMinute}:0${calSecond}`
+					bgTransform()
+				} else if (calMinute < 10) {
+					display.innerText = `0${calMinute}:${calSecond}`
+					bgTransform()
+				} else {
+					display.innerText = `${calMinute}:${calSecond}`
+					bgTransform()
+				}
+
 			}
 		}
 		function timeGo() {
@@ -51,7 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
 				return
 			} else if (e.key !== ".") {
 				time.setMinute = time.setMinute.concat(e.key)
-			}
+			} 
 		}
 
 		// 時間控制或重置
@@ -64,22 +76,25 @@ document.addEventListener('DOMContentLoaded', () => {
 					}
 					break
 				case 'ArrowUp' :
-					time.displayMinute = time.setMinute * 60
+					time.displayMinute = time.setMinute * 60 + 1
 					time.range = 0
 					break
 				case 'ArrowRight' :
-					time.displayMinute -= 5
-					bgTransform(5)
+					if (time.displayMinute > 5) {
+						time.displayMinute -= 5
+						bgTransform(5)
+					}
 					break
 			}
 		}
- 
+		
 		// 時間開關
 		if (e.key === "Enter" && !time.running && !time.setMinute) {
-			time.setMinute = time.displayMinute / 60
+			time.setMinute = Math.round(time.displayMinute / 60)
 			timeGo()
 		} else if (e.key === "Enter" && !time.running && time.setMinute <= 60) {
-			time.displayMinute = time.setMinute * 60
+			time.setMinute = Math.round(time.setMinute * 10) / 10
+			time.displayMinute = time.setMinute * 60 + 1
 			timeGo()
 		} else if (e.key === " " && time.running){
 			timeStop()
